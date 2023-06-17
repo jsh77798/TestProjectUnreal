@@ -398,10 +398,10 @@ SourceArt/**/*.tga
 # Binary Files
 Binaries/*
 Plugins/*/Binaries/*
-TestProject01/Binaries/*
-TestProject01/Intermediate/*
-TestProject01/Saved/*
-TestProject01.sln
+TestProject/Binaries/*
+TestProject/Intermediate/*
+TestProject/Saved/*
+TestProject.sln
 
 # Builds
 Build/*
