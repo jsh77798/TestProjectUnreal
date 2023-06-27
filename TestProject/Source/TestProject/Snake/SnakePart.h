@@ -19,6 +19,7 @@ public:
 	class ASnakeGameMode* GetSnakeGameMode();
 	ASnakePart* LastNextPart();
 
+	
 
 protected:
 	// Called when the game starts or when spawned

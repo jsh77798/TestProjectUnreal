@@ -47,6 +47,7 @@ public:
 	
 
 	void CurBodyReset();
+	void CurBodyNew();
 
 protected:
 	void BeginPlay() override;
@@ -77,6 +78,7 @@ private:
 	void AllMapClear();
 
 	AActor* CurBody = nullptr;
+	AActor* NewBody = nullptr;
 
 	FRandomStream RandomCreate = FRandomStream();
 

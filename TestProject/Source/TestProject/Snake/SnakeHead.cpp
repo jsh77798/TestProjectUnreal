@@ -24,7 +24,6 @@ ASnakeHead::ASnakeHead()
 void ASnakeHead::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called every frame
@@ -131,12 +130,15 @@ void ASnakeHead::LeftAction()
 		AActor* Body = GetSnakeGameMode()->GetPart(GetActorLocation(), "Body");
 		Body->Destroy();
 		GetSnakeGameMode()->CurBodyReset();
-	
-	
+		GetSnakeGameMode()->CurBodyNew();
+
+		//bool BodyType = GetSnakeGameMode()->IsPart(GetActorLocation(), "Head");
+		
 		//FVector::LeftVector * 100.0f
 		// Body »ý¼º
 		FTransform Trans;
-		Trans.SetLocation(GetActorLocation() - PrevPos );
+
+		Trans.SetLocation(GetActorLocation() - PrevPos);
 
 		AActor* NewBody = GetWorld()->SpawnActor<ASnakePart>(BodyType, Trans);
 		if (NewBody)
@@ -150,7 +152,22 @@ void ASnakeHead::LeftAction()
 				int a = 0;
 			}
 		}
-	  
+
+		if (nullptr != Next)
+		{
+			ASnakePart* CurNextPart = Next;
+
+			while (nullptr != CurNextPart)
+			{
+				CurNextPart->PrevPos = CurNextPart->GetActorLocation();
+				CurNextPart->SetActorLocation(CurNextPart->Prev->PrevPos);
+				CurNextPart = CurNextPart->Next;
+			}
+		}
+
+
+		UE_LOG(LogTemp, Error, TEXT("Error GameOver"), __FUNCTION__, __LINE__);
+		//Error GameOver
 	}
 
 
@@ -182,9 +199,11 @@ void ASnakeHead::RightAction()
 		AActor* Body = GetSnakeGameMode()->GetPart(GetActorLocation(), "Body");
 		Body->Destroy();
 		GetSnakeGameMode()->CurBodyReset();
+		GetSnakeGameMode()->CurBodyNew();
 	    
 
 		FTransform Trans;
+
 		Trans.SetLocation(GetActorLocation() - PrevPos);
 
 		AActor* NewBody = GetWorld()->SpawnActor<ASnakePart>(BodyType, Trans);
@@ -198,6 +217,19 @@ void ASnakeHead::RightAction()
 				Prev = SnakePart;
 			}
 		}
+
+		if (nullptr != Next)
+		{
+			ASnakePart* CurNextPart = Next;
+
+			while (nullptr != CurNextPart)
+			{
+				CurNextPart->PrevPos = CurNextPart->GetActorLocation();
+				CurNextPart->SetActorLocation(CurNextPart->Prev->PrevPos);
+				CurNextPart = CurNextPart->Next;
+			}
+		}
+		UE_LOG(LogTemp, Error, TEXT("Error GameOver"), __FUNCTION__, __LINE__);
 	}
 
 }
@@ -226,8 +258,10 @@ void ASnakeHead::UpAction()
 		AActor* Body = GetSnakeGameMode()->GetPart(GetActorLocation(), "Body");
 		Body->Destroy();
 		GetSnakeGameMode()->CurBodyReset();
+		GetSnakeGameMode()->CurBodyNew();
 
 		FTransform Trans;
+
 		Trans.SetLocation(GetActorLocation() - PrevPos);
 
 		AActor* NewBody = GetWorld()->SpawnActor<ASnakePart>(BodyType, Trans);
@@ -241,6 +275,19 @@ void ASnakeHead::UpAction()
 				Prev = SnakePart;
 			}
 		}
+
+		if (nullptr != Next)
+		{
+			ASnakePart* CurNextPart = Next;
+
+			while (nullptr != CurNextPart)
+			{
+				CurNextPart->PrevPos = CurNextPart->GetActorLocation();
+				CurNextPart->SetActorLocation(CurNextPart->Prev->PrevPos);
+				CurNextPart = CurNextPart->Next;
+			}
+		}
+		UE_LOG(LogTemp, Error, TEXT("Error GameOver"), __FUNCTION__, __LINE__);
 	}
 
 }
@@ -270,8 +317,12 @@ void ASnakeHead::DownAction()
 		AActor* Body = GetSnakeGameMode()->GetPart(GetActorLocation(), "Body");
 		Body->Destroy();
 		GetSnakeGameMode()->CurBodyReset();
+		GetSnakeGameMode()->CurBodyNew();
+
+
 
 		FTransform Trans;
+
 		Trans.SetLocation(GetActorLocation() - PrevPos);
 
 		AActor* NewBody = GetWorld()->SpawnActor<ASnakePart>(BodyType, Trans);
@@ -284,7 +335,23 @@ void ASnakeHead::DownAction()
 				SnakePart->Next = this;
 				Prev = SnakePart;
 			}
+
+		    if (nullptr != Next)
+		    {
+			  ASnakePart* CurNextPart = Next;
+
+			   while (nullptr != CurNextPart)
+			   {
+				  CurNextPart->PrevPos = CurNextPart->GetActorLocation();
+				  CurNextPart->SetActorLocation(CurNextPart->Prev->PrevPos);
+				  CurNextPart = CurNextPart->Next;
+			   }
+		    }
 		}
+
+
+
+		UE_LOG(LogTemp, Error, TEXT("Error GameOver"), __FUNCTION__, __LINE__);
 	}
 
 }

@@ -70,6 +70,6 @@ public:
 		void DownAction();
 
 private:
-	
 	TSubclassOf<class ASnakePart> BodyType;
+	
 };

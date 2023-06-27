@@ -15,7 +15,7 @@ void ASnakeGameMode::BeginPlay()
 	// [][][][][]
 
 	RandomCreate.GenerateNewSeed();
-
+	
 }
 
 void ASnakeGameMode::CreateOutWall(int _Y, int _Z, FVector _TileSize, TSubclassOf<AActor> _WallType)
@@ -188,6 +188,20 @@ void ASnakeGameMode::Tick(float _Delta)
 		CurBody = GetWorld()->SpawnActor<AActor>(BodyType, Trans);
 	}
 //
+
+
+	//if (nullptr != Next)
+	//{
+	//	ASnakeGameMode* CurNextPart = Next;
+	//
+	//	while (nullptr != CurNextPart)
+	//	{
+	//		CurNextPart->PrevPos = CurNextPart->GetActorLocation();
+	//		CurNextPart->SetActorLocation(CurNextPart->Prev->PrevPos);
+	//		CurNextPart = CurNextPart->Next;
+	//	}
+	//}
+
 
 	//struct SnakeBodyPart
 	//{
@@ -384,4 +398,40 @@ void ASnakeGameMode::CurBodyReset()
 //	AActor* NewBody = GetWorld()->SpawnActor<AActor>(BodyType, Trans);
 //}
 
+void ASnakeGameMode::CurBodyNew()
+{
 
+	if (nullptr == CurBody && nullptr != BodyType)
+	{
+
+		TArray<FIntVector> EmptyPoint;
+
+		for (int z = 0; z < AllMapActor.Num(); z++)
+		{
+			for (int y = 0; y < AllMapActor[z].Num(); y++)
+			{
+				if (nullptr != AllMapActor[z][y])
+				{
+					continue;
+				}
+
+				EmptyPoint.Add({ 0, y, z });
+			}
+		}
+
+		// 내부에서 seed를 시간으로 처리해줘야 진짜 랜덤한 위치를 사용할수 있다.
+
+		// 0 63
+		// 언리얼은 max까지 잘 나옵니다.
+		int RandomIndex = RandomCreate.RandRange(0, EmptyPoint.Num() - 1);
+
+		FIntVector PointVector = EmptyPoint[RandomIndex];
+
+		FTransform Trans;
+
+		Trans.SetLocation({ 0.0f, PointVector.Y * TileSize.Y, PointVector.Z * TileSize.Z });
+
+
+		NewBody = GetWorld()->SpawnActor<AActor>(BodyType, Trans);
+	}
+}
