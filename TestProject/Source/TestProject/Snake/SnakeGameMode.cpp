@@ -398,6 +398,10 @@ void ASnakeGameMode::CurBodyReset()
 //	AActor* NewBody = GetWorld()->SpawnActor<AActor>(BodyType, Trans);
 //}
 
+
+
+
+
 void ASnakeGameMode::CurBodyNew()
 {
 
@@ -425,13 +429,44 @@ void ASnakeGameMode::CurBodyNew()
 		// 언리얼은 max까지 잘 나옵니다.
 		int RandomIndex = RandomCreate.RandRange(0, EmptyPoint.Num() - 1);
 
+
 		FIntVector PointVector = EmptyPoint[RandomIndex];
 
 		FTransform Trans;
 
 		Trans.SetLocation({ 0.0f, PointVector.Y * TileSize.Y, PointVector.Z * TileSize.Z });
 
-
 		NewBody = GetWorld()->SpawnActor<AActor>(BodyType, Trans);
 	}
 }
+
+
+
+/*FTransform Trans;
+
+Trans.SetLocation(GetActorLocation() - PrevPos);
+
+AActor* NewBody = GetWorld()->SpawnActor<ASnakePart>(BodyType, Trans);
+if (NewBody)
+{
+	GetSnakeGameMode()->SetPart(NewBody);
+	ASnakePart* SnakePart = Cast<ASnakePart>(NewBody);
+	if (SnakePart)
+	{
+		SnakePart->Next = this;
+		Prev = SnakePart;
+		int a = 0;
+	}
+}
+
+if (nullptr != Next)
+{
+	ASnakePart* CurNextPart = Next;
+
+	while (nullptr != CurNextPart)
+	{
+		CurNextPart->PrevPos = CurNextPart->GetActorLocation();
+		CurNextPart->SetActorLocation(CurNextPart->Prev->PrevPos);
+		CurNextPart = CurNextPart->Next;
+	}
+}*/

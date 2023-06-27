@@ -16,6 +16,7 @@ public:
 	ASnakePart();
 	//FVector PrevPosition;
 	FVector PrevPos;
+	//AActor APrePos = PrevPos;
 	class ASnakeGameMode* GetSnakeGameMode();
 	ASnakePart* LastNextPart();
 

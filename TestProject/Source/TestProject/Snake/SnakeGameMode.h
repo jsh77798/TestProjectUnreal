@@ -45,9 +45,13 @@ public:
 	AActor* GetPart(int _Y, int _Z, FName _Tag);
 
 	
+	void AllMapClear();
 
 	void CurBodyReset();
 	void CurBodyNew();
+	
+
+	FVector* PrePos = nullptr;
 
 protected:
 	void BeginPlay() override;
@@ -75,7 +79,7 @@ private:
 
 	TArray<TArray<class AActor*>> AllMapActor;
 
-	void AllMapClear();
+	
 
 	AActor* CurBody = nullptr;
 	AActor* NewBody = nullptr;
